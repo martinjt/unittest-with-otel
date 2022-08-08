@@ -5,12 +5,12 @@ using Xunit;
 namespace unittest_with_otel;
 
 [TraceTest]
-public class TopLevelTestsOnly : BaseTestWithAssemblyFixture
+public class MoreTopLevelTestsOnly : BaseTestWithAssemblyFixture
 {
     [Fact]
     public void Test_DoStuffMethod_DoesStuff()
     {
-        var sut = new TestClass();
+        var sut = new AnotherTestClass();
         
         sut.DoSomeStuff();
 
@@ -20,7 +20,7 @@ public class TopLevelTestsOnly : BaseTestWithAssemblyFixture
     [Fact]
     public void Test_DoStuffMethod_DoesDifferentStuff()
     {
-        var sut = new TestClass();
+        var sut = new AnotherTestClass();
         
         sut.DoSomeStuff();
 
@@ -29,10 +29,10 @@ public class TopLevelTestsOnly : BaseTestWithAssemblyFixture
 
 }
 
-public class TestClass
+public class AnotherTestClass
 {
     public void DoSomeStuff()
     {
-        Thread.Sleep(500);
+        Thread.Sleep(300);
     }
 }

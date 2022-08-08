@@ -6,6 +6,8 @@ This is an example library that shows how to use OpenTelemetry as a mechanism to
 
 This is an example of just caring about the TopLevel of "These are all the tests, and their timings". This is useful as a starting block
 
+![TopLevelTests Screenshot](/assets/TopLevelTest_screenshot.png?raw=true "Top Level Tests Screenshot")
+
 ## TestsWithCausality
 
 This is an example of creating trace per test so that you can monitor the tests better where they have lots of spans.

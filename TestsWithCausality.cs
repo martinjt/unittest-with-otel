@@ -1,29 +1,16 @@
-using System.Runtime.CompilerServices;
 using System.Threading;
-using System.Threading.Tasks;
-using OpenTelemetry.Trace;
+using unittest_with_otel.Framework;
 using Xunit;
-using static unittest_with_otel.OpenTelemetryMonitoredFixture;
+using static unittest_with_otel.Framework.OpenTelemetryMonitoredFixture;
 
 namespace unittest_with_otel;
 
-[Collection("OpenTelemetryFixture")]
-public class TestsWithCausality : IAsyncLifetime
+[TraceTest(TracePerTest = true)]
+public class TestsWithCausality : BaseTestWithAssemblyFixture
 {
-    private TelemetrySpan TestSpan;
-
-    public void SetTestName([CallerMemberName]string functionName = null!) => TestSpan.UpdateName(functionName);
-
-    public TestsWithCausality(OpenTelemetryMonitoredFixture fixture)
-    {
-        TestSpan = fixture.TestTracer.StartActiveSpan("Test started");
-    }
-
     [Fact]
     public void Causality_DoStuffMethod_DoesStuff()
     {
-        SetTestName();
-
         var sut = new TestClassWithActivity();
         
         sut.DoSomeStuff();
@@ -34,24 +21,11 @@ public class TestsWithCausality : IAsyncLifetime
     [Fact]
     public void Causality_DoStuffMethod_DoesDifferentStuff()
     {
-        SetTestName();
-
         var sut = new TestClassWithActivity();
         
         sut.DoSomeStuff();
 
         Assert.True(true);
-    }
-
-    public Task InitializeAsync()
-    {
-        return Task.CompletedTask;
-    }
-
-    public Task DisposeAsync()
-    {
-        TestSpan.End();
-        return Task.CompletedTask;
     }
 }
 
